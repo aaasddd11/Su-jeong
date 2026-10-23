@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>수정 | 소개</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ===== 디자인 토큰: 메인 그레이 + 포인트 네이비 ===== */
+:root {
+  --bg: #f4f5f7;
+  --surface: #ffffff;
+  --text: #22262d;
+  --muted: #6b7280;
+  --line: #e1e4e8;
+  --accent: #1e3a8a;
+  --accent-soft: #e3e9f8;
+  --accent-text: #ffffff;
+  --shadow: 0 6px 24px rgba(20, 30, 60, .08);
+}
+:root[data-theme="dark"] {
+  --bg: #16181d;
+  --surface: #1f2229;
+  --text: #eceef2;
+  --muted: #9aa1ae;
+  --line: #2f333c;
+  --accent: #7f9cf5;
+  --accent-soft: #263050;
+  --accent-text: #0f1530;
+  --shadow: 0 6px 24px rgba(0, 0, 0, .35);
+}
+
+/* ===== 기본 스타일 ===== */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.75;
+  transition: background .3s, color .3s;
+}
+a { color: inherit; text-decoration: none; }
+section { padding: 96px 24px; }
+.container { max-width: 960px; margin: 0 auto; }
+.section-title { font-size: 1.8rem; font-weight: 700; margin-bottom: 40px; }
+.section-title::after { content: ''; display: block; width: 40px; height: 4px; background: var(--accent); margin-top: 12px; border-radius: 2px; }
+
+/* ===== 네비게이션 ===== */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.nav-inner { max-width: 960px; margin: 0 auto; height: 64px; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; }
+.logo { font-weight: 700; font-size: 1.15rem; color: var(--accent); }
+.menu { display: flex; gap: 28px; list-style: none; align-items: center; }
+.menu a { font-size: .95rem; color: var(--muted); padding: 4px 0; border-bottom: 2px solid transparent; transition: color .2s, border-color .2s; }
+.menu a:hover, .menu a.active { color: var(--accent); border-color: var(--accent); }
+.nav-actions { display: flex; gap: 8px; align-items: center; }
+.icon-btn { background: none; border: 1px solid var(--line); color: var(--text); width: 38px; height: 38px; border-radius: 50%; cursor: pointer; font-size: 1rem; }
+.icon-btn:hover { border-color: var(--accent); }
+#menuToggle { display: none; }
+
+/* ===== Hero ===== */
+#hero { min-height: 100vh; display: flex; align-items: center; padding-top: 120px; }
+.hero-inner { display: flex; align-items: center; justify-content: space-between; gap: 48px; }
+.hero-text .role { color: var(--accent); font-weight: 500; letter-spacing: .05em; }
+.hero-text h1 { font-size: clamp(2.4rem, 6vw, 3.8rem); line-height: 1.2; margin: 8px 0 16px; }
+.hero-text p { color: var(--muted); font-size: 1.15rem; margin-bottom: 32px; }
+.btn { display: inline-block; background: var(--accent); color: var(--accent-text); padding: 14px 32px; border-radius: 999px; font-weight: 500; border: none; cursor: pointer; font-family: inherit; font-size: 1rem; transition: transform .2s, box-shadow .2s; }
+.btn:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+#hero { position: relative; }
+.avatar { position: absolute; top: 88px; right: max(24px, calc((100vw - 960px) / 2 + 24px)); width: 110px; height: 110px; border-radius: 50%; background: var(--accent-soft); border: 6px solid var(--surface); box-shadow: var(--shadow); overflow: hidden; display: flex; align-items: center; justify-content: center; color: var(--muted); text-align: center; font-size: .95rem; }
+.avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+/* ===== About ===== */
+#about { background: var(--surface); }
+#about p { font-size: 1.1rem; max-width: 640px; }
+
+/* ===== Skills ===== */
+.tags { display: flex; flex-wrap: wrap; gap: 12px; }
+.tag { background: var(--accent-soft); color: var(--accent); padding: 10px 22px; border-radius: 999px; font-weight: 500; }
+
+/* ===== Experience 타임라인 ===== */
+#experience { background: var(--surface); }
+.timeline { border-left: 2px solid var(--line); margin-left: 8px; }
+.timeline-item { position: relative; padding: 0 0 32px 28px; }
+.timeline-item::before { content: ''; position: absolute; left: -8px; top: 8px; width: 14px; height: 14px; border-radius: 50%; background: var(--accent); border: 3px solid var(--surface); }
+.timeline-item .period { color: var(--muted); font-size: .9rem; }
+.timeline-item h3 { font-size: 1.15rem; }
+
+/* ===== Projects 카드 ===== */
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 28px; transition: transform .25s, box-shadow .25s; }
+.card:hover { transform: translateY(-8px); box-shadow: var(--shadow); }
+.card h3 { margin-bottom: 8px; }
+.card p { color: var(--muted); font-size: .95rem; margin-bottom: 16px; }
+.card a { color: var(--accent); font-weight: 500; }
+
+/* ===== Contact ===== */
+#contact { background: var(--surface); }
+.contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 48px; }
+.contact-info li { list-style: none; margin-bottom: 14px; word-break: break-all; }
+.contact-info span { display: block; color: var(--muted); font-size: .85rem; }
+.contact-info a:hover { color: var(--accent); text-decoration: underline; }
+form { display: flex; flex-direction: column; gap: 16px; }
+.field label { display: block; font-size: .9rem; margin-bottom: 6px; }
+.field input, .field textarea { width: 100%; padding: 12px 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); color: var(--text); font-family: inherit; font-size: 1rem; }
+.field input:focus, .field textarea:focus { outline: 2px solid var(--accent); border-color: transparent; }
+.field textarea { min-height: 130px; resize: vertical; }
+.field.invalid input, .field.invalid textarea { border-color: #d64545; }
+.error { color: #d64545; font-size: .82rem; margin-top: 4px; display: none; }
+.field.invalid .error { display: block; }
+.form-ok { color: var(--accent); font-weight: 500; display: none; }
+
+/* ===== 푸터 ===== */
+footer { text-align: center; padding: 32px 24px; color: var(--muted); font-size: .9rem; border-top: 1px solid var(--line); }
+
+/* ===== 스크롤 등장 애니메이션 ===== */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s, transform .7s; }
+.reveal.show { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } html { scroll-behavior: auto; } }
+
+/* ===== 반응형 ===== */
+@media (max-width: 768px) {
+  section { padding: 72px 20px; }
+  #menuToggle { display: inline-block; }
+  .menu { position: absolute; top: 64px; left: 0; right: 0; flex-direction: column; gap: 0; background: var(--surface); border-bottom: 1px solid var(--line); max-height: 0; overflow: hidden; transition: max-height .3s; }
+  .menu.open { max-height: 360px; }
+  .menu li { width: 100%; }
+  .menu a { display: block; padding: 14px 24px; border: none; }
+  .hero-inner { text-align: left; }
+  .avatar { top: 80px; right: 20px; width: 84px; height: 84px; font-size: .75rem; }
+  .contact-grid { grid-template-columns: 1fr; gap: 32px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== 네비게이션 ===== -->
+<nav>
+  <div class="nav-inner">
+    <a href="#hero" class="logo">수정</a>
+    <ul class="menu" id="menu">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="icon-btn" id="themeToggle" aria-label="다크모드 전환">🌙</button>
+      <button class="icon-btn" id="menuToggle" aria-label="메뉴 열기">☰</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== Hero ===== -->
+<section id="hero">
+  <div class="container hero-inner">
+    <div class="hero-text reveal">
+      <div class="role">영업지원팀 · 나우로보틱스</div>
+      <h1>안녕하세요,<br>수정입니다.</h1>
+      <p>일을 더 똑똑하게 하는 방법을 Claude와 함께 배우고 있어요.</p>
+      <a href="#contact" class="btn">연락하기</a>
+    </div>
+    <!-- 프로필 사진: 아래 src에 [사진 경로 또는 URL]을 넣으세요. 비워두면 안내 문구가 보입니다. -->
+    <div class="avatar reveal" id="avatar">
+      <img id="avatarImg" src="photo.webp.jpg" alt="수정 프로필 사진">
+      <span id="avatarEmpty">[프로필 사진]</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== About ===== -->
+<section id="about">
+  <div class="container reveal">
+    <h2 class="section-title">About</h2>
+    <p>나우로보틱스 영업지원팀에서 일하며 팀이 영업에 집중할 수 있도록 든든하게 뒤를 받치고 있습니다. 요즘은 Claude 같은 AI 도구를 업무에 접목하는 방법을 배우는 중이에요. 쉬는 날에는 새로운 맛집을 찾아다니는 것이 가장 큰 즐거움입니다.</p>
+  </div>
+</section>
+
+<!-- ===== Skills ===== -->
+<section id="skills">
+  <div class="container reveal">
+    <h2 class="section-title">Skills</h2>
+    <div class="tags">
+      <span class="tag">영업 지원</span>
+      <span class="tag">문서·자료 작성</span>
+      <span class="tag">Claude 활용</span>
+      <span class="tag">맛집 탐방</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Experience ===== -->
+<section id="experience">
+  <div class="container reveal">
+    <h2 class="section-title">Experience</h2>
+    <div class="timeline">
+      <div class="timeline-item">
+        <h3>나우로보틱스</h3>
+        <div>영업지원팀</div>
+      </div>
+      <!-- 경력/학력 추가 시 위 timeline-item 블록을 복사하세요 -->
+    </div>
+  </div>
+</section>
+
+<!-- ===== Contact ===== -->
+<section id="contact">
+  <div class="container reveal">
+    <h2 class="section-title">Contact</h2>
+    <div class="contact-grid">
+      <ul class="contact-info">
+        <li><span>GitHub</span><a href="https://github.com/aaasddd11" target="_blank" rel="noopener">github.com/aaasddd11</a></li>
+      </ul>
+      <form id="contactForm" novalidate>
+        <div class="field"><label for="cname">이름</label><input id="cname" type="text"><div class="error">이름을 입력해 주세요.</div></div>
+        <div class="field"><label for="cemail">이메일</label><input id="cemail" type="email"><div class="error">올바른 이메일을 입력해 주세요.</div></div>
+        <div class="field"><label for="cmsg">메시지</label><textarea id="cmsg"></textarea><div class="error">메시지를 입력해 주세요.</div></div>
+        <button class="btn" type="submit">보내기</button>
+        <div class="form-ok" id="formOk">메시지가 확인되었습니다. 감사합니다!</div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 푸터 ===== -->
+<footer>© 2026 수정</footer>
+
+<script>
+/* ===== 다크모드: 저장된 설정 또는 시스템 설정 사용 ===== */
+const root = document.documentElement;
+const themeBtn = document.getElementById('themeToggle');
+let saved = null;
+try { saved = localStorage.getItem('theme'); } catch (e) {}
+const initial = saved || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+applyTheme(initial);
+function applyTheme(t) {
+  root.dataset.theme = t;
+  themeBtn.textContent = t === 'dark' ? '☀️' : '🌙';
+}
+themeBtn.addEventListener('click', () => {
+  const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+  applyTheme(next);
+  try { localStorage.setItem('theme', next); } catch (e) {}
+});
+
+/* ===== 모바일 햄버거 메뉴 ===== */
+const menu = document.getElementById('menu');
+document.getElementById('menuToggle').addEventListener('click', () => menu.classList.toggle('open'));
+menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => menu.classList.remove('open')));
+
+/* ===== 스크롤 등장 애니메이션 ===== */
+const revealObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('show'); revealObs.unobserve(e.target); } });
+}, { threshold: .15 });
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+/* ===== 현재 섹션에 맞춰 메뉴 강조 ===== */
+const links = [...menu.querySelectorAll('a')];
+const sections = links.map(a => document.querySelector(a.getAttribute('href')));
+const navObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id));
+  });
+}, { rootMargin: '-45% 0px -50% 0px' });
+sections.forEach(s => navObs.observe(s));
+
+/* ===== 프로필 사진: src가 있을 때만 표시 ===== */
+const img = document.getElementById('avatarImg');
+const empty = document.getElementById('avatarEmpty');
+empty.hidden = true;
+img.addEventListener('error', () => { img.hidden = true; empty.hidden = false; });
+
+/* ===== 문의 폼 검증 ===== */
+const form = document.getElementById('contactForm');
+const ok = document.getElementById('formOk');
+form.addEventListener('submit', e => {
+  e.preventDefault();
+  ok.style.display = 'none';
+  let valid = true;
+  [['cname', v => v.trim() !== ''],
+   ['cemail', v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim())],
+   ['cmsg', v => v.trim() !== '']].forEach(([id, test]) => {
+    const input = document.getElementById(id);
+    const pass = test(input.value);
+    input.closest('.field').classList.toggle('invalid', !pass);
+    if (!pass) valid = false;
+  });
+  if (valid) { ok.style.display = 'block'; form.reset(); } /* 실제 전송은 별도 서버/서비스 연동이 필요합니다 */
+});
+</script>
+</body>
+</html>
